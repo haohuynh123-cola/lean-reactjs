@@ -1,7 +1,7 @@
 import React from "react";
-import { Button } from "react-bootstrap";
+import { Button, FormSelect } from "react-bootstrap";
 
-const Pagination = ({ totalPages, currentPage, onPageChange }) => {
+const Pagination = ({ totalPages, currentPage, onPageChange, total, setLimit, limit }) => {
     const maxVisiblePages = 5; // Số trang gần nhất hiển thị
 
     const generatePageNumbers = () => {
@@ -31,22 +31,37 @@ const Pagination = ({ totalPages, currentPage, onPageChange }) => {
     };
 
     return (
-        <div className="pagination">
-            <Button className="btn-sm" disabled={currentPage === 1} onClick={() => onPageChange(currentPage - 1)}>«</Button>
+        //add info
 
-            {generatePageNumbers().map((page, index) => (
-                <Button
-                    key={index}
-                    onClick={() => typeof page === "number" && onPageChange(page)}
-                    className={`btn-sm ${page === currentPage ? "active" : ""}`}
-                    disabled={page === "..."}
-                >
-                    {page}
-                </Button>
-            ))}
+        <div className="pagination d-flex justify-content-between">
+            <div className=" d-flex justify-content-between">
+                <span>Page {currentPage} of {totalPages}</span> <span>Total: {total}</span>
 
-            <Button className="btn-sm" disabled={currentPage === totalPages} onClick={() => onPageChange(currentPage + 1)}>»</Button>
-        </div>
+                <FormSelect onChange={(e) => setLimit(e.target.value)} className="form-select form-select-sm">
+                    <option value="5" selected={limit == 5}>5</option>
+                    <option value="10" selected={limit == 10}>10</option>
+                    <option value="20" selected={limit == 20}>20</option>
+                    <option value="50" selected={limit == 50}>50</option>
+                    <option value="100" selected={limit == 100}>100</option>
+                </FormSelect>
+            </div>
+            <div >
+                <Button className="btn-sm" disabled={currentPage === 1} onClick={() => onPageChange(currentPage - 1)}>«</Button>
+
+                {generatePageNumbers().map((page, index) => (
+                    <Button
+                        key={index}
+                        onClick={() => typeof page === "number" && onPageChange(page)}
+                        className={`btn-sm ${page === currentPage ? "active" : ""}`}
+                        disabled={page === "..."}
+                    >
+                        {page}
+                    </Button>
+                ))}
+
+                <Button className="btn-sm" disabled={currentPage === totalPages} onClick={() => onPageChange(currentPage + 1)}>»</Button>
+            </div>
+        </div >
     );
 };
 

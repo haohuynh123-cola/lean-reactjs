@@ -9,25 +9,31 @@ import { Provider } from "react-redux";
 import store from "./redux/store";
 import { Toaster } from "react-hot-toast";
 import ContactPage from './pages/ContactPage';
+import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
+
+const queryClient = new QueryClient();
 
 createRoot(document.getElementById('root')).render(
   // <StrictMode>
-  <BrowserRouter>
-    <Provider store={store}>
-      <Routes>
-        <Route path="/" element={<Home />}> </Route>
-        <Route path="/product" element={<Products />}></Route>
-        <Route path="/product/:id" element={<Product />}></Route>
-        <Route path="/cart" element={<Cart />}></Route>
-        <Route path="/checkout" element={<Checkout />}></Route>
-        <Route path="/about" element={<AboutPage />}></Route>
-        <Route path="/contact" element={<ContactPage />}></Route>
+  <QueryClientProvider client={queryClient}>
 
-        <Route path="/order" element={<Order />}></Route>
+    <BrowserRouter>
+      <Provider store={store}>
+        <Routes>
+          <Route path="/" element={<Home />}> </Route>
+          <Route path="/product" element={<Products />}></Route>
+          <Route path="/product/:id" element={<Product />}></Route>
+          <Route path="/cart" element={<Cart />}></Route>
+          <Route path="/checkout" element={<Checkout />}></Route>
+          <Route path="/about" element={<AboutPage />}></Route>
+          <Route path="/contact" element={<ContactPage />}></Route>
 
-      </Routes>
-    </Provider>
-    <Toaster />
-  </BrowserRouter>
+          <Route path="/order" element={<Order />}></Route>
+
+        </Routes>
+      </Provider>
+      <Toaster />
+    </BrowserRouter>
+  </QueryClientProvider>
   // </StrictMode>,
 )
