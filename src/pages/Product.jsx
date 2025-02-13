@@ -3,7 +3,7 @@ import Skeleton from "react-loading-skeleton";
 import { Link, useParams } from "react-router-dom";
 import Marquee from "react-fast-marquee";
 import { useDispatch, useSelector } from "react-redux";
-import { addCart } from "../redux/action";
+import { addCart, subCart } from "../redux/action";
 
 import { Footer, Nav } from "../components";
 import toast from "react-hot-toast";
@@ -71,6 +71,11 @@ const Product = () => {
         toast.success("Product added to cart");
     }
 
+    const handSubProduct = (product) => {
+        dispatch(subCart(product));
+        toast.success("Product removed from cart");
+    }
+
     const ShowProduct = () => {
         return (
             <>
@@ -95,7 +100,7 @@ const Product = () => {
                             <p>
                                 Quantity:  {productInCart ? productInCart.qty : 0}
 
-                                <Button className="ms-1 btn-sm" onClick={() => handleAddToCart(product)}>-</Button>
+                                <Button className="ms-1 btn-sm" onClick={() => handSubProduct(product)} disabled={productInCart.qty === 0}>-</Button>
                                 <Button className="ms-1 btn-sm" onClick={() => handleAddToCart(product)}>+</Button>
                             </p>
                             <h3 className="display-6  my-4">${product.price}</h3>

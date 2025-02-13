@@ -41,6 +41,15 @@ const HandleCart = (state = getInitalCart(), action) => {
             localStorage.setItem("cart", JSON.stringify(updatedCart))
             return updatedCart
 
+        case "SUBITEM":
+            updatedCart = state.map((x) =>
+                x.id === product.id ? { ...x, qty: x.qty - 1 } : x
+            );
+
+            localStorage.setItem("cart", JSON.stringify(updatedCart))
+
+            return updatedCart
+
         default:
             return state;
     }

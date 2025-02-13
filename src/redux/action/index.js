@@ -19,5 +19,12 @@ export const removeItemInCart = (product) => {
     }
 }
 
+export const subCart = (product) => {
+    return {
+        type: "SUBITEM",
+        payload: product
+    }
+}
+
 
 
